@@ -5,7 +5,6 @@ import tempfile
 from gretel_client import configure_session
 from faker import Faker
 import random
-import webbrowser
 
 
 app = Flask(__name__)
@@ -53,12 +52,16 @@ def synthesize_numeric_column(column):
         return round(faker.pyfloat(left_digits=5, right_digits=2, positive=True), 2)
 
 # Configure Gretel API
-configure_session(api_key='grtuc8d12f0eebee3b191c31d6f01f6157741404d93eccb4573a83dea110bc5d409f')
+configure_session(api_key=os.getenv('grtuc8d12f0eebee3b191c31d6f01f6157741404d93eccb4573a83dea110bc5d409f'))  # Use an environment variable for the API key
 
 # Route to render the index page (upload form)
-@app.route('/Synthesis',methods=['GET', 'HEAD'])
-def index():
+@app.route('/')
+def home():
     return redirect(url_for('index'))
+
+@app.route('/Synthesis')
+def index():
+    return render_template('index.html')  # Ensure you have an index.html in your templates folder
 
 # Route to handle the file upload, synthesize data, and display the result
 @app.route('/upload', methods=['POST'])
@@ -90,8 +93,8 @@ def upload():
     # Convert the DataFrame to HTML table format
     synthesized_html = synthesized_df.to_html(classes='table table-striped')
 
-    # Store file path in the session or pass it securely
-    return redirect(url_for('result'),table=synthesized_html, file_path=os.path.basename(synthesized_file_path))
+    # Pass the file path and table to the result page
+    return render_template('result.html', table=synthesized_html, file_path=os.path.basename(synthesized_file_path))
 
 # Route to handle downloading the synthesized CSV file
 @app.route('/download/<path:filename>', methods=['GET'])
@@ -105,5 +108,5 @@ def download_file(filename):
         return 'File not found', 404
 
 if __name__ == '__main__':
-    webbrowser.open_new('http://0.0.0.10000/Synthesis')
-    app.run(port=10000)
+    port = int(os.environ.get('PORT', 5000))  # Use $PORT provided by Render, fallback to 5000
+    app.run(host='0.0.0.0', port=port)
