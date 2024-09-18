@@ -3,4 +3,4 @@ gretel_client
 faker
 Gunicorn
 pandas
-webbrowser
+
