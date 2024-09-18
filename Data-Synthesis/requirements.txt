@@ -2,3 +2,4 @@ Flask
 gretel_client
 faker
 Gunicorn
+pandas
