@@ -56,7 +56,7 @@ def synthesize_numeric_column(column):
 configure_session(api_key='grtuc8d12f0eebee3b191c31d6f01f6157741404d93eccb4573a83dea110bc5d409f')
 
 # Route to render the index page (upload form)
-@app.route('/Synthesis')
+@app.route('/Synthesis',methods=['GET', 'HEAD'])
 def index():
     return redirect(url_for('index'))
 
