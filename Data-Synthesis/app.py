@@ -5,6 +5,7 @@ import tempfile
 from gretel_client import configure_session
 from faker import Faker
 import random
+import webbrowser
 
 
 app = Flask(__name__)
@@ -104,4 +105,5 @@ def download_file(filename):
         return 'File not found', 404
 
 if __name__ == '__main__':
+    webbrowser.open_new('http://127.0.0.1:3000/Synthesis')
     app.run()
