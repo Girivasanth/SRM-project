@@ -105,5 +105,5 @@ def download_file(filename):
         return 'File not found', 404
 
 if __name__ == '__main__':
-    webbrowser.open_new('http://127.0.0.1:3000/Synthesis')
+    webbrowser.open_new('http://0.0.0.0:10000/Synthesis')
     app.run()
