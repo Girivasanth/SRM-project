@@ -58,7 +58,7 @@ configure_session(api_key='grtuc8d12f0eebee3b191c31d6f01f6157741404d93eccb4573a8
 # Route to render the index page (upload form)
 @app.route('/Synthesis')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
 # Route to handle the file upload, synthesize data, and display the result
 @app.route('/upload', methods=['POST'])
@@ -91,7 +91,7 @@ def upload():
     synthesized_html = synthesized_df.to_html(classes='table table-striped')
 
     # Store file path in the session or pass it securely
-    return render_template('result.html', table=synthesized_html, file_path=os.path.basename(synthesized_file_path))
+    return redirect(url_for('result'),table=synthesized_html, file_path=os.path.basename(synthesized_file_path))
 
 # Route to handle downloading the synthesized CSV file
 @app.route('/download/<path:filename>', methods=['GET'])
@@ -105,5 +105,5 @@ def download_file(filename):
         return 'File not found', 404
 
 if __name__ == '__main__':
-    webbrowser.open_new('http://0.0.0.0:10000/Synthesis')
-    app.run()
+    webbrowser.open_new('http://127.0.0.1:3000/Synthesis')
+    app.run(port=3000)
