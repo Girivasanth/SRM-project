@@ -48,7 +48,7 @@ def synthesize_column_data(df):
 def synthesize_numeric_column(column):
     if pd.api.types.is_integer_dtype(column):  # Integer column
         return faker.random_int(min=1, max=10000)
-    elif pd.api.types.is_float_dtype(column):  # Float column
+    elif pd.api.types.is_float_dtype(column):  # Float colum
         return round(faker.pyfloat(left_digits=5, right_digits=2, positive=True), 2)
 
 # Configure Gretel API
